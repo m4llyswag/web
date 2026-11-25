@@ -14,9 +14,16 @@
     <header class="site-header">
         <div class="header-content">
 
+            <button class="menu-button" type="button"
+                aria-label="Navigation menu"
+                aria-controls="navigation"
+                aria-expanded="false">
+                ☰
+            </button>
+
             <a class="header-logo" href="#top">IT WEBSITE</a>
 
-            <nav class="header-navigation">
+            <nav class="header-navigation" id="navigation">
                 <ul class="navigation-list">
                     <li><a href="#services">Services</a></li>
                     <li><a href="#media">Media</a></li>
@@ -27,17 +34,20 @@
             </nav>
 
             <address class="header-contacts">
-                <a class="header-contact" href="tel:+71111111111">
-                    <img src="static/img/icon-phone.svg" alt="">
-                    +7 (111) 111-11-11
-                </a>
+
+                <div class="header-phone">
+                    <a class="header-contact" href="tel:+71111111111">
+                        <img src="static/img/icon-phone.svg" alt="">
+                        +7 (111) 111-11-11
+                    </a>
+                </div>
 
                 <a class="header-contact" href="mailto:itcompany@mail.com">
                     <img src="static/img/icon-mail.svg" alt="">
-                    itcompany@mail.com
+                    <span>itcompany@mail.com</span>
                 </a>
+
             </address>
-            
 
         </div>
     </header>
@@ -45,6 +55,18 @@
     <main id="top">
 
         <section class="hero-section">
+
+            <picture class="hero-image">
+                <source media="(min-width: 1440px)"
+                    srcset="static/img/hero-desktop.webp">
+
+                <source media="(min-width: 768px)"
+                    srcset="static/img/hero-tablet.webp">
+
+                <img src="static/img/hero-mobile.webp"
+                    alt="Mobile application screens">
+            </picture>
+
             <div class="hero-inner">
 
                 <div class="hero-content">
@@ -98,6 +120,45 @@
             </div>
         </section>
 
+        <section class="services" id="services">
+
+            <div class="services-inner">
+
+                <div class="services-heading">
+                    <h2>Full development cycle</h2>
+                    <p>We use proven technologies.</p>
+                </div>
+
+                <div class="services-content">
+
+                    <div class="service-column">
+                        <h3>Web technologies</h3>
+
+                        <ul class="services-list">
+                            <li>Frontend development</li>
+                            <li>Backend development</li>
+                            <li>Web applications</li>
+                            <li>Web services</li>
+                        </ul>
+                    </div>
+
+                    <div class="service-column">
+                        <h3>Mobile technologies</h3>
+
+                        <ul class="services-list">
+                            <li>iOS applications</li>
+                            <li>Android applications</li>
+                            <li>Cross-platform development</li>
+                            <li>Mobile services</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
     </main>
 
     <footer class="site-footer" id="contacts">
@@ -148,6 +209,41 @@
         </p>
 
     </footer>
+
+    <script>
+        const header = document.querySelector(".site-header");
+        const menuButton = document.querySelector(".menu-button");
+
+        function setMenu(isOpen) {
+            header.classList.toggle("menu-open", isOpen);
+            menuButton.setAttribute("aria-expanded", isOpen);
+            menuButton.textContent = isOpen ? "×" : "☰";
+        }
+
+        menuButton.addEventListener("click", () => {
+            const isOpen = header.classList.contains("menu-open");
+            setMenu(!isOpen);
+        });
+
+        header.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+                setMenu(false);
+            });
+        });
+
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape") {
+                setMenu(false);
+                menuButton.focus();
+            }
+        });
+
+        window.addEventListener("resize", () => {
+            if (window.innerWidth >= 1440) {
+                setMenu(false);
+            }
+        });
+    </script>
 
 </body>
 </html>
